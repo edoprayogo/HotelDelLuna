@@ -21,6 +21,11 @@ namespace HotelDelLuna.DataAccess.Models
         public string Password { get; set; }
 
         [Required]
+        [MaxLength(20)]
+        [Column(TypeName = "VARCHAR")]
+        public string Status { get; set; }
+
+        [Required]
         public int LoginFailCount { get; set; }
     }
 }

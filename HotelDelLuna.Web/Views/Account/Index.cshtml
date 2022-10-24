@@ -1,0 +1,35 @@
+﻿
+
+<div class="d-flex align-items-center">
+    <h2 class="mr-5">Account</h2>
+    <!-- Button trigger modal -->
+    <a type="button" class="insert-button btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="#" asp-action="#">Insert</a>
+    @*<div>
+            <a class="btn-sm btn btn-primary insert-button" asp-controller="Room" asp-action="Insert">Insert</a>
+        </div>*@
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
+            <th scope="col">Status</th>
+            <th scope="col" colspan="3">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row"></th>
+            <td>user</td>
+            <td>*****</td>
+            <td>status</td>
+            <td>
+                <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="#" asp-action="#" >Edit</a>
+                <a class="btn-sm btn btn-secondary activation-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="#" asp-action="#" >Activate</a>
+                <a class="btn-sm btn btn-danger delete-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="#" asp-action="#" >Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
