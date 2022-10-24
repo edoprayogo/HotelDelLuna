@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HotelDelLuna.Provider\HotelDelLuna.Provider.csproj" />
+    <ProjectReference Include="..\HotelDelLuna.ViewModell\HotelDelLuna.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HotelDelLuna.DataAccess\HotelDelLuna.DataAccess.csproj" />
+    <ProjectReference Include="..\HotelDelLuna.ViewModell\HotelDelLuna.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

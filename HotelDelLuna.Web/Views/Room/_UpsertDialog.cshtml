@@ -1,0 +1,140 @@
+﻿<!-- Modal -->
+<div class="modal fade upsert-dialog" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form class="post">
+        <input name="RoomNumber" class="roomNumber" hidden />
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Room</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="number" class="form-control doorNumber" placeholder="Door Number">
+                        </div>
+                        <div class="col">
+                            <input type="number" class="form-control floor" placeholder="Floor">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <select value="Type" asp-items="@(new SelectList(ViewBag.ListRoomType, "Value", "Text"))" class="type form-control" aria-labelledby="dropdownMenuButton"></select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="number" class="form-control price" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label class="validation" data-for="Number Floor Type Price"></label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary submit-button">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    var btnInsert = document.querySelector(".insert-button");
+    var btnClose = document.querySelector(".close-button");
+    var btnUpdate = document.querySelectorAll(".update-button");
+
+
+    btnInsert.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        $(".doorNumber").val("");
+        $(".floor").val("");
+        $(".type").val("");
+        $(".price").val("");
+    })
+
+    btnUpdate.forEach(function (btnUpdate) {
+        btnUpdate.addEventListener("click", function (event) {
+            event.preventDefault();
+            let actionUrl = btnUpdate.getAttribute("href");
+            $.ajax({
+                url: actionUrl,
+                success: function (data) {
+                    $(".roomNumber").val(data.roomNumber);
+                    $(".doorNumber").val(data.doorNumber);
+                    $(".floor").val(data.floor);
+                    $(".type").val(data.type);
+                    $(".price").val(data.price);  
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                    console.log();
+                    console.log(viewModel);
+                    console.log("ERROR");
+                },
+            });
+        });
+    });
+
+
+    $(".upsert-dialog form").submit(function (event) {
+        event.preventDefault();
+
+        let viewModel = {
+            "roomNumber": $('.upsert-dialog .roomNumber').val() == null ? null : $('.upsert-dialog .roomNumber').val(),
+            "doorNumber": parseInt($('.upsert-dialog .doorNumber').val()),
+            "floor": $('.upsert-dialog .floor').val(),
+            "type": $('.upsert-dialog .type').val(),
+            "price": parseFloat($('.upsert-dialog .price').val()),
+        }
+        let actionUrl = '@Url.Action("Save")';
+        var tokenHelper = '@Html.AntiForgeryToken()';
+        var token = $(tokenHelper).val();
+
+        $.ajax({
+            url: actionUrl,
+            method: "POST",
+            data: JSON.stringify(viewModel),
+            dataType: "Json",
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                "_RequestVerificationToken": token
+            },
+            success: function (response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    console.log(viewModel);
+                    console.log(response.validations);
+                    console.log(response.responseText);
+                }
+            },
+            error: function (response) {
+                console.log(response);
+                console.log(viewModel);
+                console.log(response.validations);
+                console.log(response.responseText);
+            }
+        });
+
+    });
+
+
+    function showValidationMessage(validations) {
+        // ingat kalo of baca valiue, kalo in baca index
+        for (var validation of validations) {
+            let propertyName = validation.propertyName;
+            let errorMsg = validation.errorMessage;
+            $(`.upsert-dialog form .validation[data-for='${propertyName}']`).text(errorMsg);
+        }
+    }
+
+    function hideValidationMessage() {
+        $('.upsert-dialog form .validation').text("");
+    }
+</script>
