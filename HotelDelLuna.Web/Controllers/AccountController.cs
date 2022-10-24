@@ -8,14 +8,16 @@ using System.Threading.Tasks;
 
 namespace HotelDelLuna.Web.Controllers
 {
-    public class GuestController : BaseController
+    public class AccountController : Controller
     {
         public IActionResult Index(int page = 1)
         {
             Pager pager;
-            var guests = GuestProvider.GetProvider().GetGuestGridIndex(out pager, page);
+            var guests = AccountProvider.GetProvider().GetAccountGridIndex(out pager, page);
             ViewBag.Pager = pager;
             return View(guests);
         }
+
+
     }
 }

@@ -4,14 +4,16 @@ using HotelDelLuna.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelDelLuna.DataAccess.Migrations
 {
     [DbContext(typeof(HotelDelLunaContext))]
-    partial class HotelDelLunaContextModelSnapshot : ModelSnapshot
+    [Migration("20221024100006_AddFieldsContext")]
+    partial class AddFieldsContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,11 +34,6 @@ namespace HotelDelLuna.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("VARCHAR(50)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("VARCHAR(20)");
 
                     b.HasKey("Username");
 
