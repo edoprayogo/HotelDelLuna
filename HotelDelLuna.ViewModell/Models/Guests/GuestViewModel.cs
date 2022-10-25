@@ -15,5 +15,7 @@ namespace HotelDelLuna.ViewModel.Models.Guests
         public string BirthCity { get; set; }
         public string Gender { get; set; }
         public string IdNumber { get; set; }
+
+        public Account Account { get; set; }
     }
 }

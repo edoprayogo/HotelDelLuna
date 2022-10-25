@@ -1,0 +1,137 @@
+﻿<!-- Modal -->
+<div class="modal fade upsert-dialog" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form class="post">
+        <input name="RegisterId" class="registerId" hidden />
+        <input name="UserId" class="userId" hidden />
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Guest</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control firstName" placeholder="First Name">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control lastName" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control birthCity" placeholder="Birth City">
+                        </div>
+                        <div class="col">
+                            <input type="date" class="form-control birthDate" placeholder="Birth Date">
+                        </div>
+                    </div>
+                    <div class="form-row col">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="M">
+                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="F">
+                            <label class="form-check-label" for="inlineRadio2">Female</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control idNumber" placeholder="ID Card Number">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label class="validation" data-for=""></label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary submit-button">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    var btnInsert = document.querySelector(".insert-button");
+    var btnClose = document.querySelector(".close-button");
+    var btnUpdate = document.querySelectorAll(".update-button");
+
+    btnInsert.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        $(".firstName").val("");
+        $(".lastName").val("");
+        $(".birthCity").val("");
+        $(".birthDate").val("");
+        $(".gender").val("");
+        $(".idNumber").val("");
+    })
+
+
+    $(".upsert-dialog form").submit(function (event) {
+        event.preventDefault();
+
+        let registerId = $('.upsert-dialog .registerId').val();
+        if (!registerId) {
+            registerId = 0;
+        };
+
+        let viewModel = {
+            "registerId": parseInt(registerId),
+            "firstName": $('.upsert-dialog .firstName').val(),
+            "lastName": $('.upsert-dialog .lastName').val(),
+            "birthCity": $('.upsert-dialog .birthCity').val(),
+            "birthDate": $('.upsert-dialog .birthDate').val(),
+            "gender": $('input[type=radio]:checked').val(),
+            "idNumber": parseInt($('.upsert-dialog .idNumber').val()),
+        }
+        let actionUrl = '@Url.Action("Save")';
+        var tokenHelper = '@Html.AntiForgeryToken()';
+        var token = $(tokenHelper).val();
+
+        $.ajax({
+            url: actionUrl,
+            method: "POST",
+            data: JSON.stringify(viewModel),
+            dataType: "Json",
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                "_RequestVerificationToken": token
+            },
+            success: function (response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    console.log(viewModel);
+                    console.log(response.validations);
+                    console.log(response.responseText);
+                }
+            },
+            error: function (response) {
+                console.log(response);
+                console.log(viewModel);
+                console.log(response.validations);
+                console.log(response.responseText);
+            }
+        });
+
+    });
+
+    function showValidationMessage(validations) {
+        // ingat kalo of baca valiue, kalo in baca index
+        for (var validation of validations) {
+            let propertyName = validation.propertyName;
+            let errorMsg = validation.errorMessage;
+            $(`.upsert-dialog form .validation[data-for='${propertyName}']`).text(errorMsg);
+        }
+    }
+
+    function hideValidationMessage() {
+        $('.upsert-dialog form .validation').text("");
+    }
+</script>

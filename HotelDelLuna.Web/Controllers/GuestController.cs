@@ -1,5 +1,6 @@
 ﻿using HotelDelLuna.Provider;
 using HotelDelLuna.ViewModel.Helpers;
+using HotelDelLuna.ViewModel.Models.Guests;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,46 @@ namespace HotelDelLuna.Web.Controllers
             ViewBag.Pager = pager;
             return View(guests);
         }
+
+        public IActionResult Insert() 
+        {
+            UpsertGuestModel viewModel = new UpsertGuestModel();
+            return Json(viewModel);
+        }
+
+        public IActionResult Update(int registerId)
+        {
+            UpsertGuestModel viewModel = GuestProvider.GetProvider().GetUpdate(registerId);
+            return Json(viewModel);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult Save([FromBody] UpsertGuestModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (vm.UserId == 0)
+                    {
+                        GuestProvider.GetProvider().RunInsert(vm);
+                    }
+                    else
+                    {
+                        GuestProvider.GetProvider().RunUpdate(vm);
+                    }
+                    return Json(new { success = true });
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            var validationMessages = GetValidationMessagesVM(ModelState);
+            return Json(new { success = false, validations = validationMessages });
+        }
+
     }
 }
