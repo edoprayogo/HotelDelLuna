@@ -29,7 +29,7 @@ namespace HotelDelLuna.Provider
                                 BirthCity = g.BirthCity,
                                 Gender = g.Gender,
                                 IdNumber = g.IdNumber,
-                                Username = g.Username
+                                UserId = g.UserId
                               }).ToList();
                 return guests;                
             }

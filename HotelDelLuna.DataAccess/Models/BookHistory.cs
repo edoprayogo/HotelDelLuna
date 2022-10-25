@@ -14,8 +14,8 @@ namespace HotelDelLuna.DataAccess.Models
         public int BookId { get; set; }
 
         [Required]
-        public string Username { get; set; }
-        [ForeignKey("Username")]
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
         public Account Account { get; set; }
 
         [Required]

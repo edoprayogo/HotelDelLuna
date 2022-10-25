@@ -4,14 +4,16 @@ using HotelDelLuna.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelDelLuna.DataAccess.Migrations
 {
     [DbContext(typeof(HotelDelLunaContext))]
-    partial class HotelDelLunaContextModelSnapshot : ModelSnapshot
+    [Migration("20221025031650_nullable-failcount")]
+    partial class nullablefailcount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,33 +23,24 @@ namespace HotelDelLuna.DataAccess.Migrations
 
             modelBuilder.Entity("HotelDelLuna.DataAccess.Models.Account", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<string>("Username")
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR(50)");
 
                     b.Property<int>("LoginFailCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("VARCHAR(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR(50)");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("VARCHAR(50)");
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("Username")
-                        .IsUnique();
+                    b.HasKey("Username");
 
                     b.ToTable("Account", "dbo");
                 });
@@ -73,14 +66,15 @@ namespace HotelDelLuna.DataAccess.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("VARCHAR(10)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(50)");
 
                     b.HasKey("BookId");
 
                     b.HasIndex("RoomNumber");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("Username");
 
                     b.ToTable("BookHistories");
                 });
@@ -115,8 +109,10 @@ namespace HotelDelLuna.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("VARCHAR(50)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR(50)");
 
                     b.HasKey("RegisterId");
 
@@ -124,7 +120,7 @@ namespace HotelDelLuna.DataAccess.Migrations
                         .IsUnique()
                         .HasFilter("[IdNumber] IS NOT NULL");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("Username");
 
                     b.ToTable("Guest", "dbo");
                 });
@@ -161,7 +157,7 @@ namespace HotelDelLuna.DataAccess.Migrations
 
                     b.HasOne("HotelDelLuna.DataAccess.Models.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("Username")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -174,7 +170,7 @@ namespace HotelDelLuna.DataAccess.Migrations
                 {
                     b.HasOne("HotelDelLuna.DataAccess.Models.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("Username")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

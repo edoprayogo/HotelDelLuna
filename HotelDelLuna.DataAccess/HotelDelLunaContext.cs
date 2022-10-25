@@ -28,6 +28,7 @@ namespace HotelDelLuna.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Guest>().HasIndex(gst => gst.IdNumber).IsUnique();
+            modelBuilder.Entity<Account>().HasIndex(a => a.Username).IsUnique();
             base.OnModelCreating(modelBuilder);
         }
 

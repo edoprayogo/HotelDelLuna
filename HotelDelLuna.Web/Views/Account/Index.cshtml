@@ -1,18 +1,33 @@
-﻿
+﻿@using HotelDelLuna.ViewModel.Models.Accounts
+@using HotelDelLuna.ViewModel.Helpers
+
+@model IEnumerable<AccountViewModel>
+@{
+    ViewData["Title"] = "Account";
+    Pager pager = new Pager();
+
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+@section modelDialog{
+    <partial name="_UpsertDialog" />
+}
 
 <div class="d-flex align-items-center">
     <h2 class="mr-5">Account</h2>
     <!-- Button trigger modal -->
-    <a type="button" class="insert-button btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="#" asp-action="#">Insert</a>
-    @*<div>
-            <a class="btn-sm btn btn-primary insert-button" asp-controller="Room" asp-action="Insert">Insert</a>
-        </div>*@
+    <a type="button" class="insert-button btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="Insert">Insert</a>
 </div>
 
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Username</th>
             <th scope="col">Password</th>
             <th scope="col">Status</th>
@@ -20,16 +35,28 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row"></th>
-            <td>user</td>
-            <td>*****</td>
-            <td>status</td>
-            <td>
-                <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="#" asp-action="#" >Edit</a>
-                <a class="btn-sm btn btn-secondary activation-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="#" asp-action="#" >Activate</a>
-                <a class="btn-sm btn btn-danger delete-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="#" asp-action="#" >Delete</a>
-            </td>
-        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.UserId</th>
+                <td>@item.Username</td>
+                <td>**************</td>
+                <td>@ParsingView.FormatStatus(item.Status)</td>
+                <td>
+                    <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="Update" asp-route-UserId="@item.UserId">Edit</a>
+                    @if (item.Status == "Active")
+                    {
+                        <a class="btn-sm btn btn-danger activation-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="ChangeStatus" asp-route-UserId="@item.UserId">Deactive</a>
+                    }
+                    else
+                    {
+                        <a class="btn-sm btn btn-info activation-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="ChangeStatus" asp-route-UserId="@item.UserId">Activate</a>
+                    }
+                    <a class="btn-sm btn btn-danger delete-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="Deleter" asp-route-UserId="@item.UserId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<partial name="~/Views/Shared/_pager.cshtml" model="@pager" />

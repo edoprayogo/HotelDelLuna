@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HotelDelLuna.DataAccess\HotelDelLuna.DataAccess.csproj" />
     <ProjectReference Include="..\HotelDelLuna.ViewModell\HotelDelLuna.ViewModel.csproj" />
   </ItemGroup>
