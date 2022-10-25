@@ -10,5 +10,51 @@ namespace HotelDelLuna.ViewModel.Helpers
         public static string FormatRupiah(decimal money) {
             return money.ToString("c", CultureInfo.CreateSpecificCulture("id-ID"));
         }
+        public static string FormatTypeRoom(string type) 
+        {
+            if (type == "Reg-SB")
+            {
+                return "Regular Single Bed";
+            }
+            else if (type == "Reg-DB")
+            {
+                return "Regular Double Bed";
+            }
+            else if (type == "Reg-TB")
+            {
+                return "Regular Twin Bed";
+            }
+            else if (type == "VIP-SB")
+            {
+                return "VIP Single Bed";
+            }
+            else if (type == "VIP-DB")
+            {
+                return "VIP Double Bed";
+            }
+            else if (type == "VIP-TB")
+            {
+                return "VIP Twin Bed";
+            }
+            else
+            {
+                return "";
+            }
+        }
+        public static string FormatStatus(string status) 
+        {
+            if (status == "A")
+            {
+                return "Active";
+            }
+            else if (status == "N")
+            {
+                return "Non-Active";
+            }
+            else
+            {
+                return "Blocked";
+            }
+        }
     }
 }

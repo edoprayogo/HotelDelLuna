@@ -11,12 +11,16 @@ namespace HotelDelLuna.DataAccess.Models
     {
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UserId { get; set; }
+
+        [Required]
         [MaxLength(50)]
         [Column(TypeName = "VARCHAR")]
         public string Username { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         [Column(TypeName = "VARCHAR")]
         public string Password { get; set; }
 

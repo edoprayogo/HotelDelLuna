@@ -19,7 +19,7 @@
 <div class="d-flex align-items-center">
     <h2 class="mr-5">Room</h2>
     <!-- Button trigger modal -->
-    <a type="button" class="insert-button btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Room" asp-action="Insert" >
+    <a type="button" class="insert-button btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Room" asp-action="Insert" >
         Insert
     </a>
     @*<div>
@@ -48,7 +48,7 @@
             <tr>
                 <td>@item.RoomNumber</td>
                 <td>@item.Floor</td>
-                <td>@item.Type</td>
+                <td>@ParsingView.FormatTypeRoom(item.Type)</td>
                 <td>@ParsingView.FormatRupiah(@item.Price)</td>
                 <td>
                     <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Room" asp-action="Update" asp-route-roomNumber="@item.RoomNumber">Edit</a>

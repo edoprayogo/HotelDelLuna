@@ -15,10 +15,8 @@ namespace HotelDelLuna.DataAccess.Models
         public int RegisterId { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        [Column(TypeName = "VARCHAR")]
-        public string Username { get; set; }
-        [ForeignKey("Username")]
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
         public Account Account { get; set; }
 
         [MaxLength(50)]

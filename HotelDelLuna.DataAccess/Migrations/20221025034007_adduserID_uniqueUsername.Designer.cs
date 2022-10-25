@@ -4,14 +4,16 @@ using HotelDelLuna.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelDelLuna.DataAccess.Migrations
 {
     [DbContext(typeof(HotelDelLunaContext))]
-    partial class HotelDelLunaContextModelSnapshot : ModelSnapshot
+    [Migration("20221025034007_adduserID_uniqueUsername")]
+    partial class adduserID_uniqueUsername
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,13 +28,13 @@ namespace HotelDelLuna.DataAccess.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("LoginFailCount")
+                    b.Property<int?>("LoginFailCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("VARCHAR(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR(50)");
 
                     b.Property<string>("Status")
                         .IsRequired()

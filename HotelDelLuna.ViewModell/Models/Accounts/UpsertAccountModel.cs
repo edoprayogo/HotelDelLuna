@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HotelDelLuna.ViewModel.Models.Accounts
 {
-    public class AccountViewModel
+    public class UpsertAccountModel
     {
         public int UserId { get; set; }
         public string Username { get; set; }
