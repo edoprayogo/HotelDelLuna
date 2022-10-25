@@ -10,6 +10,22 @@ namespace HotelDelLuna.ViewModel.Helpers
         public static string FormatRupiah(decimal money) {
             return money.ToString("c", CultureInfo.CreateSpecificCulture("id-ID"));
         }
+        public static string FormatDate(DateTime date)
+        {
+            return date.ToString("D");
+        }
+
+        public static string StringView(string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+            else
+            {
+                return "N/A";
+            }
+        }
         public static string FormatTypeRoom(string type) 
         {
             if (type == "Reg-SB")
@@ -56,5 +72,6 @@ namespace HotelDelLuna.ViewModel.Helpers
                 return "Blocked";
             }
         }
+        
     }
 }

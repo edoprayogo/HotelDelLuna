@@ -14,20 +14,26 @@
     }
 }
 
+@section modelDialog{
+    <partial name="_UpsertDialog" />
+}
+
 <div class="d-flex align-items-center">
     <h2 class="mr-5">Guest</h2>
     <div>
-        <a class="btn-sm btn btn-primary insert-button" asp-controller="#" asp-action="#">Insert</a>
+        <a class="btn-sm btn btn-primary insert-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Guest" asp-action="Insert">Insert</a>
     </div>
 </div>
 
 <table class="table table-hover table-responsive-sm">
     <thead>
         <tr>
-            <th>Register Number</th>
+            <th>Register Id</th>
+            <th>Username</th>
             <th>Guest Name</th>
             <th>Birth Date</th>
             <th>Gender</th>
+            <th scope="col" colspan="3">Action</th>
         </tr>
     </thead>
 
@@ -36,9 +42,14 @@
         {
             <tr>
                 <td>@item.RegisterId</td>
-                <td>@item.FirstName @item.LastName </td>
-                <td>@item.BirthCity, @item.BirthDate</td>
-                <td>@item.Gender</td>
+                <td>@ParsingView.StringView(@item.Account.Username)</td>
+                <td>@ParsingView.StringView($"{@item.FirstName} {@item.LastName}") </td>
+                <td>@ParsingView.StringView($"{@item.BirthCity}, {ParsingView.FormatDate(@item.BirthDate)}")</td>
+                <td>@ParsingView.StringView(@item.Gender)</td>
+                <td>
+                    <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="Update" asp-route-RegisterId="@item.RegisterId">Edit</a>
+                    <a class="btn-sm btn btn-danger update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="Delete" asp-route-RegisterId="@item.RegisterId">Delete</a>
+                </td>
             </tr>
         }
     </tbody>
