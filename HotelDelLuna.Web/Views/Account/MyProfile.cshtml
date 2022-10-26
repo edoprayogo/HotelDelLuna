@@ -1,0 +1,51 @@
+﻿@using HotelDelLuna.ViewModel.Models.Guests
+@using HotelDelLuna.ViewModel.Helpers
+
+@model GuestViewModel
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<table class="table table-borderless">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>Username</td>
+            <td>@Model.Account.Username</td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>@ParsingView.StringView(@Model.FirstName)</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>@ParsingView.StringView(@Model.LastName)</td>
+        </tr>
+        <tr>
+            <td>Birth Date</td>
+            <td>@ParsingView.FormatDate(@Model.BirthDate)</td>
+        </tr>
+        <tr>
+            <td>Birth City</td>
+            <td>@ParsingView.StringView(@Model.BirthCity)</td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td>@ParsingView.StringView(@Model.Gender)</td>
+        </tr>
+        <tr>
+            <td>ID Card Number</td>
+            <td>@ParsingView.StringView(@Model.IdNumber)</td>
+        </tr>
+        <tr>
+            <td>Status Account</td>
+            <td>@ParsingView.FormatStatus(@Model.Account.Status)</td>
+        </tr>
+    </tbody>
+</table>

@@ -7,7 +7,8 @@ namespace HotelDelLuna.ViewModel.Helpers
 {
     public static class ParsingView
     {
-        public static string FormatRupiah(decimal money) {
+        public static string FormatRupiah(decimal money)
+        {
             return money.ToString("c", CultureInfo.CreateSpecificCulture("id-ID"));
         }
         public static string FormatDate(DateTime date)
@@ -26,7 +27,7 @@ namespace HotelDelLuna.ViewModel.Helpers
                 return "N/A";
             }
         }
-        public static string FormatTypeRoom(string type) 
+        public static string FormatTypeRoom(string type)
         {
             if (type == "Reg-SB")
             {
@@ -57,7 +58,7 @@ namespace HotelDelLuna.ViewModel.Helpers
                 return "";
             }
         }
-        public static string FormatStatus(string status) 
+        public static string FormatStatus(string status)
         {
             if (status == "A")
             {
@@ -67,11 +68,15 @@ namespace HotelDelLuna.ViewModel.Helpers
             {
                 return "Non-Active";
             }
+            else if (status == "Admin")
+            {
+                return "Admin";
+            }
             else
             {
                 return "Blocked";
             }
         }
-        
+
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace HotelDelLuna.Web.Controllers
@@ -20,11 +21,13 @@ namespace HotelDelLuna.Web.Controllers
 
         public IActionResult Index()
         {
+            SetUsernameRole(User.Claims);
             return View();
         }
 
         public IActionResult Privacy()
         {
+            SetUsernameRole(User.Claims);
             return View();
         }
 
@@ -32,6 +35,23 @@ namespace HotelDelLuna.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private void SetUsernameRole(IEnumerable<Claim> claims)
+        {
+            foreach (var claim in claims)
+            {
+                if (claim.Type == ClaimTypes.NameIdentifier)
+                {
+                    ViewBag.Username = claim.Value;
+                }
+
+                if (claim.Type == ClaimTypes.Role)
+                {
+                    ViewBag.Role = claim.Value;
+                }
+
+            }
         }
     }
 }

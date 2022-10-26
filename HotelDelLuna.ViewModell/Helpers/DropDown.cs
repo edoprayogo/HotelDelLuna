@@ -33,6 +33,7 @@ namespace HotelDelLuna.ViewModel.Helpers
                 new DropDown {Text = "Active", Value = "A"},
                 new DropDown {Text = "Non-Active", Value = "N"},
                 new DropDown {Text = "Blocked", Value = "B"},
+                new DropDown {Text = "Admin", Value = "Admin"},
             };
         }
     }

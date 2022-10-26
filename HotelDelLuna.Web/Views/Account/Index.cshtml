@@ -43,16 +43,19 @@
                 <td>**************</td>
                 <td>@ParsingView.FormatStatus(item.Status)</td>
                 <td>
-                    <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="Update" asp-route-UserId="@item.UserId">Edit</a>
-                    @if (item.Status == "Active")
+                    @if (item.Status != "Admin")
                     {
-                        <a class="btn-sm btn btn-danger activation-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="ChangeStatus" asp-route-UserId="@item.UserId">Deactive</a>
+                        <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="Update" asp-route-UserId="@item.UserId">Edit</a>
+                        @if (item.Status == "A")
+                        {
+                            <a class="btn-sm btn btn-danger activation-button" asp-controller="Account" asp-action="ChangeStatus" asp-route-UserId="@item.UserId">Deactive</a>
+                        }
+                        else
+                        {
+                            <a class="btn-sm btn btn-info activation-button" asp-controller="Account" asp-action="ChangeStatus" asp-route-UserId="@item.UserId">Activate</a>
+                        }
+                        <a class="btn-sm btn btn-danger delete-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="Deleter" asp-route-UserId="@item.UserId">Delete</a>
                     }
-                    else
-                    {
-                        <a class="btn-sm btn btn-info activation-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="ChangeStatus" asp-route-UserId="@item.UserId">Activate</a>
-                    }
-                    <a class="btn-sm btn btn-danger delete-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="Deleter" asp-route-UserId="@item.UserId">Delete</a>
                 </td>
             </tr>
         }
