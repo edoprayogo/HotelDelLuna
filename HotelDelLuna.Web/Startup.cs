@@ -29,8 +29,8 @@ namespace HotelDelLuna.Web
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(opt =>
                 {
-                    opt.LoginPath = "/Account/Login"; //jika login berhasil
-                    opt.AccessDeniedPath = "/Account/AccessDenied"; // jika login gagal
+                    opt.LoginPath = "/Login/Login"; //jika login berhasil
+                    opt.AccessDeniedPath = "/Login/AccessDenied"; // jika login gagal
                 });
 
             services.AddAntiforgery(options =>
@@ -59,7 +59,7 @@ namespace HotelDelLuna.Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

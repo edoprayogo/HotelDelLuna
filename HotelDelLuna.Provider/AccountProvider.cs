@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using HotelDelLuna.ViewModel.Helpers;
 using HotelDelLuna.DataAccess.Models;
+using HotelDelLuna.ViewModel.Models.Guests;
 
 namespace HotelDelLuna.Provider
 {
@@ -80,8 +81,53 @@ namespace HotelDelLuna.Provider
                 };
                 contenxt.Add(newAccount);
                 contenxt.SaveChanges();
+
+
+
             }
         }
+
+        public void RunChangeStatus(int userId)
+        {
+            using (var context = new HotelDelLunaContext())
+            {
+                Account entity = context.Accounts.SingleOrDefault(a => a.UserId == userId);
+                if (entity.Status == "A")
+                {
+                    entity.Status = "N";
+                    context.SaveChanges();
+                }
+                else
+                {
+                    entity.Status = "A";
+                    entity.LoginFailCount = 0;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public GuestViewModel MyProfilView(string username) 
+        {
+            using (var context = new HotelDelLunaContext())
+            {
+                Guest guest = context.Guests.Where(g => g.Account.Username == username).AsEnumerable().FirstOrDefault();
+                var guestDetail = new GuestViewModel()
+                {
+                    RegisterId = guest.RegisterId,
+                    UserId = guest.UserId,
+                    FirstName = guest.FirstName,
+                    LastName = guest.LastName,
+                    BirthDate = guest.BirthDate,
+                    BirthCity = guest.BirthCity,
+                    Gender = guest.Gender,
+                    IdNumber = guest.IdNumber,
+                    Account = guest.Account
+                };
+                return guestDetail;
+            }
+        }
+
+
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using HotelDelLuna.Provider;
 using HotelDelLuna.ViewModel.Helpers;
 using HotelDelLuna.ViewModel.Models.Guests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace HotelDelLuna.Web.Controllers
 {
+    [Authorize]
     public class GuestController : BaseController
     {
         public IActionResult Index(int page = 1)
         {
+            SetUsernameRole(User.Claims);
             Pager pager;
             var guests = GuestProvider.GetProvider().GetGuestGridIndex(out pager, page);
             ViewBag.Pager = pager;

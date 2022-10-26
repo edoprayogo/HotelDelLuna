@@ -13,10 +13,11 @@ namespace HotelDelLuna.Provider
         protected string GenerateUsername(string gender, string firstName, string lastName, string idNumber) 
         {
             string firstCode = gender.Substring(0,1);
-            string secondCode = $"{firstName.Substring(0, 1)}{lastName.Substring(0, 1)}";
+            string secondCode = $"{firstName.Substring(0, 1)}{lastName.Substring(0, 1)}";            
             string thirdCode = idNumber.Substring((idNumber.Length - 4),4);
-
-            return $"{firstCode}{secondCode}{thirdCode}";
+            string codeTemp = $"{firstCode}{secondCode}{thirdCode}";
+            string dateCode = DateTime.Now.ToString("yy-MM-dd");
+            return $"{codeTemp}{dateCode}";
         }
     }
 }
