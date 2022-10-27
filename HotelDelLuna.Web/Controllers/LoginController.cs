@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HotelDelLuna.Web.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         public IActionResult Login()
         {
@@ -66,6 +66,7 @@ namespace HotelDelLuna.Web.Controllers
         [HttpGet]
         public IActionResult AccessDenied()
         {
+            SetUsernameRole(User.Claims);
             return View();
         }
 

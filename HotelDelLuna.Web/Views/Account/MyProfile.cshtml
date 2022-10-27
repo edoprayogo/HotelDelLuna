@@ -1,10 +1,13 @@
-﻿@using HotelDelLuna.ViewModel.Models.Guests
+﻿@using HotelDelLuna.ViewModel.Models.Accounts
 @using HotelDelLuna.ViewModel.Helpers
 
-@model GuestViewModel
+@model MyProfileViewModel
 @{
     ViewData["Title"] = "My Profile";
 }
+
+<a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Account" asp-action="UpdateMyProfile" asp-route-UserId="@Model.UserId">Edit</a>
+
 
 <table class="table table-borderless">
     <thead>
@@ -17,7 +20,7 @@
     <tbody>
         <tr>
             <td>Username</td>
-            <td>@Model.Account.Username</td>
+            <td>@ParsingView.StringView(@Model.Username)</td>
         </tr>
         <tr>
             <td>First Name</td>
@@ -45,7 +48,7 @@
         </tr>
         <tr>
             <td>Status Account</td>
-            <td>@ParsingView.FormatStatus(@Model.Account.Status)</td>
+            <td>@ParsingView.FormatStatus(@Model.Status)</td>
         </tr>
     </tbody>
 </table>

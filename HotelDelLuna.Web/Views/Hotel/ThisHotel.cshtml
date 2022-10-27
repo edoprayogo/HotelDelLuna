@@ -1,0 +1,14 @@
+﻿@using HotelDelLuna.ViewModel.Models.HotelImages
+
+@model UpsertHotelImage
+@{ 
+    ViewData["Title"] = "Update Hotel Image";
+}
+
+<form asp-action="AddImage" asp-controller="Hotel" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label asp-for="PartImage">Insert Hotel Picture</label>
+        <input asp-for="PartImage" type="file" class="form-control-file" id="partImage">
+    </div>
+    <button class="btn btn-secondary" type="submit">Submit</button>
+</form>

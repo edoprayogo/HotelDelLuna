@@ -106,28 +106,99 @@ namespace HotelDelLuna.Provider
             }
         }
 
-        public GuestViewModel MyProfilView(string username) 
+        public MyProfileViewModel MyProfilView(string username)
         {
             using (var context = new HotelDelLunaContext())
             {
-                Guest guest = context.Guests.Where(g => g.Account.Username == username).AsEnumerable().FirstOrDefault();
-                var guestDetail = new GuestViewModel()
+                bool checkAnyGuest = context.Guests.Any(g => g.Account.Username == username);
+                if (checkAnyGuest)
                 {
-                    RegisterId = guest.RegisterId,
-                    UserId = guest.UserId,
-                    FirstName = guest.FirstName,
-                    LastName = guest.LastName,
-                    BirthDate = guest.BirthDate,
-                    BirthCity = guest.BirthCity,
-                    Gender = guest.Gender,
-                    IdNumber = guest.IdNumber,
-                    Account = guest.Account
-                };
-                return guestDetail;
+                    Guest guest = context.Guests.Where(g => g.Account.Username == username).AsEnumerable().FirstOrDefault();
+                    Account acc = context.Accounts.Where(a => a.Username == username).FirstOrDefault();
+                    var guestDetail = new MyProfileViewModel()
+                    {
+                        RegisterId = guest.RegisterId,
+                        UserId = guest.UserId,
+                        FirstName = guest.FirstName,
+                        LastName = guest.LastName,
+                        BirthDate = guest.BirthDate,
+                        BirthCity = guest.BirthCity,
+                        Gender = guest.Gender,
+                        IdNumber = guest.IdNumber,
+                        Username = username,
+                        Status = acc.Status,
+                        Account = acc
+                    };
+                    return guestDetail;
+                }
+                else
+                {
+                    var guestDetail = new MyProfileViewModel()
+                    {
+                        
+                        RegisterId = 0,
+                        UserId = null,
+                        FirstName = null,
+                        LastName = null,
+                        BirthDate = new DateTime(2000,1,1),
+                        BirthCity = null,
+                        Gender = null,
+                        IdNumber = null,
+                        Account = null,
+                        Username = username,
+                        Status = "A"
+                    };
+                    return guestDetail;
+                }
+
             }
         }
 
+        public MyProfileViewModel GetUpdateMyProfile(string username) 
+        {
+            using (var context = new HotelDelLunaContext())
+            {
+                bool checkAcc = context.Accounts.Any(a => a.Username == username);
+                if (checkAcc)
+                {
+                    Guest guest = context.Guests.FirstOrDefault(g => g.Account.Username == username);
+                    Account account = guest.Account;
+                    MyProfileViewModel viewModel = new MyProfileViewModel();
+                    viewModel.Account = account;
+                    viewModel.RegisterId = guest.RegisterId;
+                    viewModel.UserId = guest.UserId;
+                    viewModel.FirstName = guest.FirstName;
+                    viewModel.LastName = guest.LastName;
+                    viewModel.BirthCity = guest.BirthCity;
+                    viewModel.BirthDate = guest.BirthDate;
+                    viewModel.Gender = guest.Gender;
+                    viewModel.IdNumber = guest.IdNumber;
+                    viewModel.Username = username;
+                    viewModel.Status = account.Status;                    
+                    return viewModel;
+                }
+                else
+                {
+                    MyProfileViewModel viewModel = new MyProfileViewModel();
+                    viewModel.RegisterId = 0;
+                    viewModel.UserId = 0;
+                    viewModel.FirstName = null;
+                    viewModel.LastName = null;
+                    viewModel.BirthCity = null;
+                    viewModel.BirthDate = new DateTime(2000, 1, 1);
+                    viewModel.Gender = null;
+                    viewModel.IdNumber = null;
+                    viewModel.Username = null;
+                    viewModel.Status = "A";
+                    return viewModel;
+                }
+            }
+        }
 
+        public void RunEditMyProfil() 
+        {
+
+        }
 
     }
 }
