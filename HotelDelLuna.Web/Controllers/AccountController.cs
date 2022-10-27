@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace HotelDelLuna.Web.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+
     public class AccountController : BaseController
     {
+        [Authorize(Roles = "Administrator")]
         public IActionResult Index(int page = 1)
         {
             SetUsernameRole(User.Claims);
@@ -24,6 +25,7 @@ namespace HotelDelLuna.Web.Controllers
             return View(accounts);
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult Insert() 
         {
             SetUsernameRole(User.Claims);
@@ -31,6 +33,7 @@ namespace HotelDelLuna.Web.Controllers
             return Json(viewModel);
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult Update(int userId) 
         {
             SetUsernameRole(User.Claims);
@@ -72,7 +75,7 @@ namespace HotelDelLuna.Web.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [Authorize(Roles = "Guest")]
         public IActionResult MyProfile() 
         {
             SetUsernameRole(User.Claims);
@@ -80,5 +83,42 @@ namespace HotelDelLuna.Web.Controllers
             var profileView = AccountProvider.GetProvider().MyProfilView(username);
             return View(profileView);
         }
+
+        public IActionResult UpdateMyProfile() 
+        {
+            SetUsernameRole(User.Claims);
+            string username = GetUsername(User.Claims);
+            MyProfileViewModel myModel = AccountProvider.GetProvider().GetUpdateMyProfile(username);
+            return Json(myModel);
+        }
+
+        //[ValidateAntiForgeryToken]
+        //[HttpPost]
+        //public IActionResult EditMyProfil([FromBody] MyProfileViewModel vm)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            if (vm. == 0)
+        //            {
+        //                AccountProvider.GetProvider().RunInsert(vm);
+        //            }
+        //            else
+        //            {
+        //                AccountProvider.GetProvider().RunUpdate(vm);
+        //            }
+        //            return Json(new { success = true });
+        //        }
+        //        catch (Exception)
+        //        {
+
+        //            throw;
+        //        }
+        //    }
+        //    var validationMessages = GetValidationMessagesVM(ModelState);
+        //    return Json(new { success = false, validations = validationMessages });
+        //}
+
     }
 }

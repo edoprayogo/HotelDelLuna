@@ -36,7 +36,7 @@ namespace HotelDelLuna.DataAccess
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<BookHistory> BookHistories { get; set; }
-
+        public DbSet<HotelImage> HotelImages { get; set; }
 
     }
 }

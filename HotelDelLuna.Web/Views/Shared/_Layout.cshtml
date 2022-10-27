@@ -51,7 +51,15 @@
                         }
                         else
                         {
-                            <a class="btn btn-primary" asp-controller="Account" asp-action="MyProfile">My Profile</a>
+                            @if (role == "Guest")
+                            {
+                                <a class="btn btn-primary" asp-controller="Account" asp-action="MyProfile">My Profile</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-primary" asp-controller="Hotel" asp-action="ThisHotel">This Hotel</a>
+
+                            }
                             <a class="btn btn-primary" asp-controller="Login" asp-action="Logout">Logout</a>
                         }
                     </div>
@@ -67,14 +75,20 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Hotel" asp-action="AboutUs">About Us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Guest" asp-action="Index">Guest</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Room" asp-action="Index">Room</a>
-                </li>
+                @if (role == "Administrator")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Guest" asp-action="Index">Guest</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Room" asp-action="Index">Room</a>
+                    </li>
+                }
             </ul>
 
             <div class="right-container col-11">
