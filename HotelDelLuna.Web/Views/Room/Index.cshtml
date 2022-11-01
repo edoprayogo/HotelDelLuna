@@ -12,6 +12,8 @@
         pager = ViewBag.Pager;
         pageNo = pager.CurrentPage;
     }
+
+    var role = (ViewBag.Role == null) ? "Anonymous" : ViewBag.Role;
 }
 
 
@@ -19,7 +21,7 @@
 <div class="d-flex align-items-center">
     <h2 class="mr-5">Room</h2>
     <!-- Button trigger modal -->
-    <a type="button" class="insert-button btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Room" asp-action="Insert" >
+    <a type="button" class="insert-button btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Room" asp-action="Insert">
         Insert
     </a>
     @*<div>
@@ -51,7 +53,14 @@
                 <td>@ParsingView.FormatTypeRoom(item.Type)</td>
                 <td>@ParsingView.FormatRupiah(@item.Price)</td>
                 <td>
-                    <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Room" asp-action="Update" asp-route-roomNumber="@item.RoomNumber">Edit</a>
+                    @if (role == "Administrator")
+                    {
+                        <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Room" asp-action="Update" asp-route-roomNumber="@item.RoomNumber">Edit</a>
+                    }
+                    else
+                    {
+                        <a class="btn-sm btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter" asp-controller="Room" asp-action="Book" asp-route-roomNumber="@item.RoomNumber">Book</a>
+                    }
                 </td>
             </tr>
         }
