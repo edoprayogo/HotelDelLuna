@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using HotelDelLuna.ViewModel.Helpers;
 using HotelDelLuna.DataAccess.Models;
+using HotelDelLuna.ViewModel.Models.BookHistories;
 
 namespace HotelDelLuna.Provider
 {
@@ -84,11 +85,32 @@ namespace HotelDelLuna.Provider
             }
         }
 
+        public void BookingRoom(UpsertBookHistoryModel vm) 
+        {
+            using (var context = new HotelDelLunaContext())
+            {
+                BookHistory bookHistory = new BookHistory()
+                {
+                    RoomNumber = vm.RoomNumber,
+                    UserId = vm.UserId,
+                    CheckInDate = vm.CheckInDate,
+                    CheckOutDate = vm.CheckOutDate,
+                    FamilyCount = vm.FamilyCount
+                };
+                context.BookHistories.Add(bookHistory);
+                context.SaveChanges();
+            }
+        }
 
 
         public string GenerateRoomNumber(UpsertRoomModel vm)
         {
             return $"{vm.Floor}{vm.DoorNumber.ToString("00")}";
+        }
+
+        public int GetIdUser(string username) 
+        {
+            return AccountProvider.GetProvider().GettAllAccount().Where(a => a.Username == username).SingleOrDefault().UserId;
         }
 
     }

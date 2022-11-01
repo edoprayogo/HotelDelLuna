@@ -1,5 +1,6 @@
 ﻿using HotelDelLuna.Provider;
 using HotelDelLuna.ViewModel.Helpers;
+using HotelDelLuna.ViewModel.Models.BookHistories;
 using HotelDelLuna.ViewModel.Models.Rooms;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -66,8 +67,35 @@ namespace HotelDelLuna.Web.Controllers
         }
 
 
+        public IActionResult Book(string roomNumber) 
+        {
+            string username = GetUsername(User.Claims);
+            var bookModel = new UpsertBookHistoryModel();
+            bookModel.RoomNumber = roomNumber;
+            bookModel.UserId = RoomProvider.GetProvider().GetIdUser(username);
+            return Json(bookModel);
+        }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult Booked([FromBody] UpsertBookHistoryModel bookModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    RoomProvider.GetProvider().BookingRoom(bookModel);
+                }
+                catch (Exception)
+                {
 
+                    throw;
+                }
+                return Json(new { success = true });
+            }
+            var validationMessages = GetValidationMessagesVM(ModelState);
+            return Json(new { success = false, validations = validationMessages });
+        }
 
-
+        
     }
 }

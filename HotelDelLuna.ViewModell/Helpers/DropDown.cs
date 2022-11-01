@@ -1,4 +1,7 @@
-﻿using System;
+﻿using HotelDelLuna.DataAccess;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -35,6 +38,17 @@ namespace HotelDelLuna.ViewModel.Helpers
                 new DropDown {Text = "Blocked", Value = "B"},
                 new DropDown {Text = "Admin", Value = "Admin"},
             };
+        }
+        public static List<SelectListItem> ListRooms()
+        {
+            using (var context = new HotelDelLunaContext())
+            {
+                return context.Rooms.Select(a => new SelectListItem()
+                {
+                    Text = a.RoomNumber,
+                    Value = a.RoomNumber
+                }).ToList();
+            }
         }
     }
 }

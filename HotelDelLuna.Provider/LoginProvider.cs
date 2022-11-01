@@ -89,5 +89,13 @@ namespace HotelDelLuna.Provider
 
             }
         }
+
+        public int GetIdByUsername(string username)
+        {
+            using (var context = new HotelDelLunaContext())
+            {
+                return context.Accounts.Where(a => a.Username == username).SingleOrDefault().UserId;
+            }
+        }
     }
 }
